@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://seoywa-s-workspace-09rdfa.ap-southeast-2.xata.sh/db/snapcast",
+  "codegen": {
+    "output": "src/xata.ts"
+  }
+}
