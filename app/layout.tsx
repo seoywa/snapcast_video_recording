@@ -1,3 +1,5 @@
+//Deployment at https://snapcast-video-recording.vercel.app
+
 import type { Metadata } from "next";
 import { Karla } from "next/font/google";
 import "./globals.css";
