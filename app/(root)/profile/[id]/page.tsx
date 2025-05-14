@@ -1,21 +1,44 @@
+import EmptyState from '@/components/EmptyState'
 import Header from '@/components/Header'
 import VideoCard from '@/components/VideoCard'
-import { dummyCards } from '@/constants'
+import { getAllVideosByUser } from '@/lib/actions/video'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
-const ProfilePage = async ({ params }: ParamsWithSearch) => {
-  const { id } = await params
+const ProfilePage = async ({ params, searchParams }: ParamsWithSearch) => {
+  const { id } = await params;
+  const { query, filter } = await searchParams;
+
+  const { user, videos } = await getAllVideosByUser(id, query, filter);
+
+  if (!user) redirect('/404')
 
   return (
     <div className='wrapper page'>
-      <h1 className='text-2xl font-karla'>USER ID: {id}</h1>
+      <Header subHeader={user?.email} title={user?.name} userImg={user?.image || ''} />
+
       <section className='video-grid'>
-        {dummyCards.map(card => (
-          <VideoCard {...card} key={card.id}/>
-        ))}
+        {videos?.length > 0 ? (
+          <section className="video-grid">
+            {videos.map(({ video, user }) => (
+              <VideoCard
+                key={video.id}
+                {...video}
+                userImg={user?.image || ""}
+                username={user?.name || "Guest"}
+                thumbnail={video.thumbnailUrl}
+              />
+            ))}
+          </section>
+        ) : (
+          <EmptyState
+            icon="/assets/icons/video.svg"
+            title="No videos available yet"
+            description="Videos will show up once you upload"
+          />
+        )}
       </section>
 
-      <Header subHeader='mock_email@gmail.com' title='JADE | MockUser' />
     </div>
   )
 }

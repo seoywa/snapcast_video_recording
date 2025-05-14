@@ -10,7 +10,7 @@ const VideoPlayer = ({ videoId }: VideoPlayerProps) => {
         title="Video player"
         style={{border: 0, zIndex: 50}}
         allowFullScreen
-        allow='accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture'
+        allow='accelerometer; gyroscope; encrypted-media; picture-in-picture'
       ></iframe>
     </div>
   );
